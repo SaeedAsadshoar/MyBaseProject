@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UIElements
+  m_EditorClassIdentifier: 
+  m_GroupName: UIElements
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 98545185da95bf645b0a45c4ade50eae
+  m_SerializeEntries:
+  - m_GUID: ba4355cd3f0d24d47be68e7aff44daec
+    m_Address: Assets/Prefabs/UI/UIToast.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ac832783cbfef414887da671a2f7b9c6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e43353ff464a0034c93bcd91ad66e9b7, type: 2}
+    - {fileID: 11400000, guid: 62ec915577444604abe7833dbd7bd3fa, type: 2}

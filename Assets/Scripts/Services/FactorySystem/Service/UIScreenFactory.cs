@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DI.Pool;
 using Domain.Enum;
 using Domain.Interface;
+using Presentation.UI;
 using Services.FactorySystem.Interface;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,45 +16,63 @@ namespace Services.FactorySystem.Service
     {
         private readonly DiContainer _diContainer;
 
+        private UILoading.Factory _uiLoadingFactory;
+        private UIGame.Factory _uiGameFactory;
+
         public UIScreenFactory(DiContainer diContainer)
         {
             _diContainer = diContainer;
         }
 
-        public async Task<IFactoryObject> GetUiScreen(UiPanelNames panelName)
+        public async Task LoadAllUIs()
         {
-            if (!IsFactoryLoaded(panelName)) DefineFactory(panelName);
-
-            while (!IsFactoryLoaded(panelName))
+            var allPanels = Enum.GetNames(typeof(UiPanelNames));
+            int count = allPanels.Length;
+            for (int i = 0; i < count; i++)
             {
-                await Task.Delay(10);
+                var panelName = (UiPanelNames)i;
+                DefineFactory(panelName);
+                while (!IsFactoryLoaded(panelName))
+                {
+                    await Task.Delay(10);
+                }
             }
+        }
 
+        public IFactoryObject GetUiScreen(UiPanelNames panelName)
+        {
             switch (panelName)
             {
-                /*case UiPanelNames.UIGame:
-                    return _uiGame.Create();*/
+                case UiPanelNames.UILoading:
+                    return _uiLoadingFactory.Create();
+                case UiPanelNames.UIGame:
+                    return _uiGameFactory.Create();
             }
 
             return null;
         }
-        
-        public void DefineFactory(UiPanelNames panelName)
+
+        private void DefineFactory(UiPanelNames panelName)
         {
             switch (panelName)
             {
-                /*case UiPanelNames.UIGame:
+                case UiPanelNames.UILoading:
+                    LoadFactory<UILoading, UILoading.Factory>(panelName.ToString(), panelName, _diContainer);
+                    break;
+                case UiPanelNames.UIGame:
                     LoadFactory<UIGame, UIGame.Factory>(panelName.ToString(), panelName, _diContainer);
-                    break;*/
+                    break;
             }
         }
 
-        public bool IsFactoryLoaded(UiPanelNames panelName)
+        private bool IsFactoryLoaded(UiPanelNames panelName)
         {
             switch (panelName)
             {
-                /*case UiPanelNames.UIGame:
-                    return _uiGame != null;*/
+                case UiPanelNames.UILoading:
+                    return _uiLoadingFactory != null;
+                case UiPanelNames.UIGame:
+                    return _uiGameFactory != null;
             }
 
             return false;
@@ -65,13 +84,16 @@ namespace Services.FactorySystem.Service
             {
                 AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(assetReference);
                 await handle.Task;
-                FactoryCreator<T, TU>.Create(ref diContainer, 0, "UIElements", handle.Result);
+                FactoryCreator<T, TU>.Create(ref diContainer, 0, "UIScreens", handle.Result);
 
                 switch (panelName)
                 {
-                    /*case UiPanelNames.UIGame:
-                        _uiGame = diContainer.Resolve<UIGame.Factory>();
-                        break;*/
+                    case UiPanelNames.UILoading:
+                        _uiLoadingFactory = diContainer.Resolve<UILoading.Factory>();
+                        break;
+                    case UiPanelNames.UIGame:
+                        _uiGameFactory = diContainer.Resolve<UIGame.Factory>();
+                        break;
                 }
             }
             catch (Exception e)

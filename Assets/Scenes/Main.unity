@@ -510,7 +510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1447524331}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,8 +536,8 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1447524331}
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1044223808}
-  - {fileID: 1447524331}
   - {fileID: 1237287442}

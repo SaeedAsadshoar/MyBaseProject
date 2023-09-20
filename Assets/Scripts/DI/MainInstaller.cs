@@ -1,7 +1,7 @@
 using Services.AudioSystem.Interface;
 using Services.AudioSystem.Service;
-using Services.Config.Interface;
-using Services.Config.Service;
+using Services.ConfigService.Interface;
+using Services.ConfigService.Service;
 using Services.EventSystem.Interface;
 using Services.EventSystem.Service;
 using Services.FactorySystem.Interface;
@@ -42,7 +42,7 @@ namespace DI
             Container.Bind<IUIScreenFactory>().To<UIScreenFactory>().AsSingle().NonLazy();
             Container.Bind<IPlayerFactory>().To<PlayerFactory>().AsSingle().NonLazy();
 
-            Container.Bind<IInGameRepositorySystem>().To<InGameRepositoryService>().AsSingle().NonLazy();
+            Container.Bind<IInGameRepositoryService>().To<InGameRepositoryService>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<UnityUpdateService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<UnityFixedUpdateService>().AsSingle().NonLazy();
